@@ -171,7 +171,7 @@ class Shopgo_AramexShipping_Model_Shipping
     public function getRatesAndPackages($object, $returnRates = true, $destinationData = array())
     {
         $helper = Mage::helper('aramexshipping');
-        $quoteItems = $object->getAllItems();
+        $quoteItems = null;
         $localItems = array();
         $packages = array('origin' => array());
         $suppliers = $helper->getSuppliersCollection();
@@ -180,12 +180,15 @@ class Shopgo_AramexShipping_Model_Shipping
         switch (get_class($object)) {
             case 'Mage_Sales_Model_Quote':
                 $quoteType = 'quote';
+                $quoteItems = $object->getAllVisibleItems();
                 break;
             case 'Mage_Sales_Model_Order':
                 $quoteType = 'order';
+                $quoteItems = $object->getAllItems();
                 break;
             case 'Mage_Sales_Model_Order_Shipment':
                 $quoteType = 'shipment';
+                $quoteItems = $object->getAllItems();
                 break;
             default:
                 return;
@@ -848,7 +851,7 @@ class Shopgo_AramexShipping_Model_Shipping
 
         try {
             if ($shipment = Mage::registry('aramex_shipment')) {
-                if ($shipment->getOrder()->getCustomerEmail() && $shipment->getEmailSent()) {
+                if ($shipment->getOrder()->getCustomerEmail() && !$shipment->getEmailSent()) {
                     if ($comments = Mage::registry('aramex_shipments_comments')) {
                         $comments = '<br/><strong>' . $helper->__('Comments') . ':</strong>'
                                   . $comments;
