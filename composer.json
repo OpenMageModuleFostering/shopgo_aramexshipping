@@ -1,0 +1,16 @@
+{
+    "name": "OpenMageModuleFostering/Shopgo_AramexShipping",
+    "type": "magento-module",
+    "license": "Open-Software-License-(OSL)",
+    "homepage": "",
+    "description": "Aramex shipping allows to calculate Aramex shipping rates, create Aramex shipments and track them.",
+    "authors": [
+    {
+        "name": "Moe Ghashim",
+        "email": "moe@shopgo.me"
+    }
+],
+    "suggest": {
+        "magento-hackathon/magento-composer-installer": "*"
+    }
+}
